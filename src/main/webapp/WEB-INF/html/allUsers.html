@@ -1,0 +1,48 @@
+<div data-ng-controller="UserController">
+	<div class="page-header">
+		<h2>All Users</h2>
+	</div>
+	<div data-ng-init="getAllUsers()">
+		<table class="table table-striped">
+			<thead class="thead-inverse">
+				<tr>
+					<th>#Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Roles</th>
+					<th>Verified</th>
+					<th>Locked</th>
+					<th>Edit?</th>
+					<th>Delete?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="user in users | filter:tablePagination.paginate">
+					<td>{{ user.id }}</td>
+					<td>{{ user.firstName }}</td>
+					<td>{{ user.lastName }}</td>
+					<td>{{ user.email }}</td>
+					<td><p data-ng-repeat="role in user.roles">{{ role }}</p></td>
+					<th>{{ user.verified }}</th>
+					<th>{{ user.locked }}</th>
+					<td>
+						<a href="#/user" class="btn btn-primary btn-md" data-ng-click="setTargetUser(user)">Edit</a>
+					</td>
+					<td>
+						<button type="button" class="btn btn-md btn-danger" data-ng-click="deleteUser(user)">
+							<i class="glyphicon glyphicon-remove-circle"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<ul class="breadcrumb">
+            <li><button class="btn btn-xs" data-ng-disabled="currentPage === 1"  data-ng-click="setPrev()">Prev</button></li>
+            <li>{{ currentPage }}</li>
+            <li><button class="btn btn-xs" data-ng-disabled="tablePagination.maxPage === 0 || currentPage === tablePagination.maxPage" data-ng-click="setNext()">Next</button></li>
+        </ul>
+		<div data-ng-if="deletedUser" class="alert alert-success" role="alert"><strong>Great!</strong> User {{deletedUser.email}} is deleted successfully.</div>
+	</div>
+	<a href="#/user" class="btn btn-primary btn-md">Add User</a>
+</div>

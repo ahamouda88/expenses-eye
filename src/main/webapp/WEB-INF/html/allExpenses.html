@@ -1,0 +1,78 @@
+<div data-ng-controller="ExpenseController">
+	<div class="page-header">
+		<h2>All Expenses</h2>
+	</div>
+	<div data-ng-init="getAllExpenses()">
+		<form name="filterExpenseForm" class="form-horizontal">
+			<!-- Min Amount -->
+		    <div class="form-group">
+		        <label for="inputMinAmount" class="control-label col-xs-2">Min Amount:</label>
+		        <div class="col-xs-10">
+			       	<input type="number" data-ng-model="filter.expense.minAmount" class="form-control" id="inputMinAmount" min="0" step=".01" data-ng-change="filterExpenses()">
+				</div>
+		    </div>
+		    <!-- Max Amount -->
+		    <div class="form-group">
+		        <label for="inputMaxAmount" class="control-label col-xs-2">Max Amount:</label>
+		        <div class="col-xs-10">
+			       	<input type="number" data-ng-model="filter.expense.maxAmount" class="form-control" id="inputMaxAmount" min="0" step=".01" data-ng-change="filterExpenses()">
+				</div>
+		    </div>
+		    <!-- Start Time -->
+			<div class="form-group">
+				<label for="inputStartTime" class="control-label col-xs-2">Start Time:</label>
+				<div class="col-xs-10">
+					<input data-ng-model="filter.expense.startTime" class="form-control" type="datetime-local" id="inputStartTime" data-ng-model-options="{updateOn: 'blur'}" data-ng-change="filterExpenses()"> 
+	 			</div>
+			</div>
+		    <!-- End Date -->
+		    <div class="form-group">
+				<label for="inputEndTime" class="control-label col-xs-2">End Time:</label>
+				<div class="col-xs-10">
+					<input data-ng-model="filter.expense.endTime" class="form-control" type="datetime-local" id="inputEndTime" data-ng-model-options="{updateOn: 'blur'}" data-ng-change="filterExpenses()">
+	 			</div>
+			</div>
+		</form>
+		<table class="table table-sexpenseed">
+	  		<thead class="thead-inverse">
+		   	 	<tr>
+		      		<th>#Id</th>
+		      		<th>Amount</th>
+		      		<th>Date</th>
+		      		<th>Time</th>
+		      		<th>Description</th>
+		      		<th>Comment</th>
+		      		<th data-ng-show="hasRole('ADMIN')">User</th>
+		      		<th>Edit?</th>
+		      		<th>Delete?</th>
+		   	 	</tr>
+	  		</thead>
+	  		<tbody>
+	    			<tr data-ng-repeat="expense in expenses | filter:tablePagination.paginate">
+					<td>{{ expense.id }}</td>
+					<td>{{ expense.amount }}</td>
+					<td>{{ expense.time | date:'MM/dd/yyyy'}}</td>
+					<td>{{ expense.time | date:'hh:mm a' }}</td>
+					<td>{{ expense.description | limitTo: 40 }}{{expense.description.length > 40 ? '...' : ''}}</td>
+					<td>{{ expense.comment | limitTo: 40 }}{{expense.comment.length > 40 ? '...' : ''}}</td>
+					<td data-ng-show="hasRole('ADMIN')">{{ expense.user.email }}</td>
+					<td>
+						<a href="#/expense" class="btn btn-primary btn-md" data-ng-click="setTargetExpense(expense)">Edit</a>
+					</td>
+					<td>
+						<button type="button" class="btn btn-md btn-danger" data-ng-click="deleteExpense(expense)">
+							<i class="glyphicon glyphicon-remove-circle"></i>
+						</button>
+					</td>
+			    </tr>
+	  		</tbody>
+		</table>
+		<ul class="breadcrumb">
+            <li><button class="btn btn-xs" data-ng-disabled="currentPage === 1"  data-ng-click="setPrev()">Prev</button></li>
+            <li>{{ currentPage }}</li>
+            <li><button class="btn btn-xs" data-ng-disabled="tablePagination.maxPage === 0 || currentPage === tablePagination.maxPage" data-ng-click="setNext()">Next</button></li>
+        </ul>
+		<a href="#/expense" class="btn btn-primary btn-md">Add Expense</a>
+		<a href="#/expenses/week-expenses" class="btn btn-default btn-md">Week Expenses</a>
+	</div>
+</div>

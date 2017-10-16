@@ -1,0 +1,36 @@
+<div data-ng-controller="ExpenseController">
+	<div data-ng-init="getThisWeekExpenses()" id="thisWeekExpenses">
+		<div class="page-header">
+			<h2>This Week's Expenses</h2>
+			<h5>From Monday {{ startDay | date:'MM/dd/yyyy'}} till Sunday {{ endDay | date:'MM/dd/yyyy'}} </h5>
+		</div>
+		<table class="table table-sexpenseed">
+	  		<thead class="thead-inverse">
+		    		<tr>
+		      		<th>#Id</th>
+		      		<th>Amount</th>
+		      		<th>Date (MM/DD/YYYY)</th>
+		      		<th>Time</th>
+		      		<th>Description</th>
+		      		<th>Comment</th>
+		   	 	</tr>
+	  		</thead>
+	  		<tbody>
+	    			<tr data-ng-repeat="expense in expenses">
+		    			<td>{{ expense.id }}</td>
+					<td>{{ expense.amount }}</td>
+					<td>{{ expense.time | date:'MM/dd/yyyy'}}</td>
+					<td>{{ expense.time | date:'hh:mm a' }}</td>
+					<td>{{ expense.description }}</td>
+					<td>{{ expense.comment }}</td>
+			    </tr>
+	  		</tbody>
+		</table>
+		<ul class="breadcrumb">
+        		<li>Total Amount: {{ expenses.totalAmount }}</li>
+        		<li>Average Daily Amount: {{ expenses.averageAmount }}</li>
+    		</ul>
+	</div>
+	<a href="#expenses" class="btn btn-primary btn-md">Back</a>
+	<button type="button" class="btn btn-md btn-danger" data-ng-click="print('thisWeekExpenses')">Print</button>
+</div>

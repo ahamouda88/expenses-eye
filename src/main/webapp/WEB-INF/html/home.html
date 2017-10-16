@@ -1,0 +1,25 @@
+<div data-ng-controller="UserController" data-ng-init="loadChartData()">
+	<div class="page-header">
+		<h2>Welcome to Expenses Eye!!</h2>
+	</div>
+	
+	<form name="registrationRequestForm" class="form-horizontal" data-ng-submit="sendRequest()" data-ng-show="hasRole('ADMIN')">
+		<!-- Email field and Send button -->
+	    <div class="form-group">
+	        <label for="inputEmail" class="control-label col-xs-3">Invite User: </label>
+	        <div class="col-xs-5">
+	            <input data-ng-model="request.email" type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+	        </div>
+	        <div class="col-xs-2">
+	        <button type="submit" class="btn btn-primary">Send</button>
+	        </div>
+	    </div>
+	    <div data-ng-if="!request.success" class="alert alert-danger"  data-ng-repeat="message in request.messages" role="alert">{{ message }}</div>
+	    <div data-ng-if="request.success" class="alert alert-success" role="alert"><strong>Great!</strong> email was sent successfully to the user.</div>
+	</form>
+	
+	<div data-ng-show="hasRole('ADMIN') || hasRole('REGULAR_USER')">
+		<h5 class="text-center">All Time Expenses Chart</h5>
+		<div data-line-chart data-chart-data="chart.expenses" data-chart-time="chart.times" onload="loadChartData()"></div>
+	</div>
+</div>

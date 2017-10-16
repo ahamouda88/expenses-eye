@@ -1,0 +1,101 @@
+<div data-ng-controller="UserController">
+	<div class="page-header">
+		<h2>Add/Update User</h2>
+	</div>
+	<form name="userForm" class="form-horizontal" data-ng-submit="addUpdateUser()" data-ng-init="getTargetUser()">
+		<!-- User Id field -->
+		<input data-ng-model="user.Id" type="hidden" id="userId"/>
+		<input data-ng-model="user.version" type="hidden" id="version"/>
+		<input data-ng-model="user.verified" type="hidden" id="verified"/>
+		<input data-ng-model="user.locked" type="hidden" id="locked"/>
+		<input data-ng-model="user.numOfAttempts" type="hidden" id="locked"/>
+		
+		<!-- Image field -->
+		<div class="form-group">
+            <label for="userImage" class="control-label col-xs-2">Upload Image</label>
+            <div class="col-xs-10">
+            		<input type="file" class="form-control-file" accept="image/png, image/jpeg, image/gif" id="userImage" data-uploader="upload">
+            		<img class="img-thumbnail img-rounded"  data-ng-show="imageFile" data-ng-src="{{ imageUrl ? imageUrl : 'data:image/jpeg;base64,' + imageFile}}"  height="100" width="200" >
+            </div>
+        </div>
+        
+		<!-- First Name field -->
+	    <div class="form-group">
+	        <label for="inputFirstName" class="control-label col-xs-2">First Name</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.firstName" class="form-control" id="inputFirstName" placeholder="First Name" required>
+	        </div>
+	    </div>
+	    
+	    <!-- Last Name field -->
+	    <div class="form-group">
+	        <label for="inputLastName" class="control-label col-xs-2">Last Name</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.lastName" class="form-control" id="inputLastName" placeholder="Last Name" required>
+	        </div>
+	    </div>
+	    
+		<!-- Email field -->
+	    <div class="form-group">
+	        <label for="inputEmail" class="control-label col-xs-2">Email</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.email" type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+	        </div>
+	    </div>
+	    
+	    <!-- Password field -->
+	    <div class="form-group">
+	        <label for="inputPassword" class="control-label col-xs-2">Password</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+	        </div>
+	    </div>
+	    
+	    <!-- Confirm Password field -->
+	    <div class="form-group">
+	        <label for="inputConfirmPassword" class="control-label col-xs-2">Confirm Password</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.confirmPassword" type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
+	        </div>
+	    </div>
+	    
+	    <!-- Roles Drop-down List -->
+		<div class="form-group" data-ng-show="hasRole('ADMIN')">
+			<label for="inputRoles" class="control-label col-xs-2">Roles</label>
+			<div class="col-xs-10" id="inputRoles">
+				<p data-ng-repeat="role in allRoles">
+					<input type="checkbox" value="{{role}}" data-ng-checked="user.roles.indexOf(role) > -1" data-ng-click="switchRole(role)" id="adminRole"> {{ role }}
+				</p>
+			</div>
+		</div>
+	    
+	    <!-- Verified field -->
+	    <div class="form-group" data-ng-show="hasRole('ADMIN') || hasRole('USER_MANAGER')">
+	        <label for="inputVerified" class="control-label col-xs-2">Verified</label>
+	        <div class="col-xs-10">
+	            <input type="checkbox" data-ng-model="user.verified" id="inputVerified">
+	        </div>
+	    </div>
+	    
+	    <!-- Locked field -->
+	    <div class="form-group" data-ng-show="hasRole('ADMIN') || hasRole('USER_MANAGER')">
+	        <label for="inputLocked" class="control-label col-xs-2">Locked</label>
+	        <div class="col-xs-10">
+	            <input type="checkbox" data-ng-model="user.locked" id="inputLocked">
+	        </div>
+	    </div>
+	    
+	    <!-- Submit Button -->
+	    <div class="form-group">
+	        <div class="col-xs-offset-2 col-xs-10">
+	            <button type="submit" class="btn btn-primary">Submit</button>
+	            <a href="#/users" class="btn btn-default">Back</a>
+	        </div>
+	    </div>
+	    
+	    <!-- Status messages -->
+		<div data-ng-if="user.response.id && insert" class="alert alert-success" role="alert"><strong>Great!</strong> User {{user.response.email}} is created successfully.</div>
+	   	<div data-ng-if="user.response.id && !insert" class="alert alert-success" role="alert"><strong>Great!</strong> User {{user.response.email}} is updated successfully.</div>
+	    <div data-ng-if="user.response.errorCode" class="alert alert-danger"  data-ng-repeat="message in user.response.messages" role="alert">{{ message }}</div>
+	</form>
+</div>

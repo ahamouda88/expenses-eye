@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="./webjars/bootstrap/3.3.6/css/bootstrap.css">
+		<link rel="stylesheet" href="./webjars/font-awesome/4.0.0/css/font-awesome.css">
+		
+		<link rel="stylesheet" href="../resources/static/css/vendor/c3.css">
+		<link rel="stylesheet" href="../resources/static/css/social-media.css">
+		<title>Expenses Eye</title>
+	</head>
+	<body data-ng-app="application" data-ng-controller="NavigationController">
+		<nav class="navbar navbar-inverse">
+	  		<div class="container-fluid">
+		    		<div class="navbar-header">
+		    			<a href="#/" class="navbar-brand" >Expenses Eye</a>
+		   		</div>
+		   			<ul class="nav navbar-nav">
+	      				<li><a href="#/expenses" data-ng-show="(hasRole('ADMIN') || hasRole('REGULAR_USER'))">Expenses</a></li>
+	      				<li><a href="#/users" data-ng-show="(hasRole('ADMIN') || hasRole('USER_MANAGER'))">Users</a></li>
+	    				</ul>
+		    		<div class="collapse navbar-collapse" id="myNavbar">
+	      			<ul class="nav navbar-nav navbar-right">
+	      				<li><a href="#/userDetails" data-ng-show="authenticated" data-ng-click="initUserDetails">Hi! {{ currentUser.firstName }}</a></li>
+	        				<li><a href="#/user" data-ng-show="!authenticated"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+	        				<li><a href="#/login" data-ng-show="!authenticated"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+	        				<li><a href="" data-ng-show="authenticated" data-ng-click="logoutUser()">Logout</a></li>
+	      			</ul>
+		    		</div>
+	  		</div>
+		</nav>
+		<div data-ng-view></div>
+		
+    		<!-- scripts -->
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular.min.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-resource.min.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-route.min.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="./webjars/satellizer/0.15.5/dist/satellizer.min.js"></script>
+		<script type="text/javascript" src="./webjars/d3js/3.5.16/d3.min.js"></script>
+		<script type="text/javascript" src="../resources/static/js/vendor/c3.min.js"></script>
+		<script type="text/javascript" src="./webjars/c3-angular/1.2.0/c3-angular.min.js"></script>
+		<script type="text/javascript" src="../resources/static/js/app.js"></script>
+		<script type="text/javascript" src="../resources/static/js/userService.js"></script> 
+		<script type="text/javascript" src="../resources/static/js/userController.js"></script>
+		<script type="text/javascript" src="../resources/static/js/expenseService.js"></script> 
+		<script type="text/javascript" src="../resources/static/js/pagerService.js"></script>
+		<script type="text/javascript" src="../resources/static/js/expenseController.js"></script>
+		<script type="text/javascript" src="../resources/static/js/navigationController.js"></script>
+		<script type="text/javascript" src="../resources/static/js/filters.js"></script>
+		<script type="text/javascript" src="../resources/static/js/directives.js"></script>
+	</body>
+</html>

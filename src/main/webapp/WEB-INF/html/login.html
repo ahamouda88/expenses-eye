@@ -1,0 +1,31 @@
+<div id="loginDiv" data-ng-show="!authenticated">
+	<div class="page-header">
+		<h2>Please Login</h2>
+	</div>
+	<div class="container" >
+		<div class="alert alert-danger" data-ng-show="loginError">
+			{{ loginErrorMessage }}
+		</div>
+	   	<div class="card card-container">
+	   		<form class="form-signin" data-ng-submit="loginUser()">
+	            <input data-ng-model="credentials.email" type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+	            <input data-ng-model="credentials.password" type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+	            <input class="btn btn-lg btn-primary btn-block btn-signin" name="submit" type="submit" value="Sign In">
+	        </form>
+	   	</div>
+	   	<div style="margin-top:10px;">
+    			<a class="btn btn-small btn-social btn-facebook" data-ng-click="authenticateProvider('facebook')">
+    				<i class="fa fa-facebook fa-fw"></i> Sign in with Facebook
+    			</a>
+    			<a class="btn btn-small btn-social btn-google-plus" data-ng-click="authenticateProvider('google')">
+    				<i class="fa fa-google-plus fa-fw"></i> Sign in with Google
+    			</a>
+		</div>
+		<div data-ng-if="credentials.response.errorCode" class="alert alert-danger"  data-ng-repeat="message in credentials.response.messages" role="alert">{{ message }}</div>
+	</div>
+</div>
+<div id="logoutDiv" data-ng-show="authenticated">
+	<div class="page-header">
+		<h2>Want to <a href="" data-ng-show="authenticated" data-ng-click="logoutUser()">Logout</a>?</h2>
+	</div>
+</div>
