@@ -22,7 +22,7 @@
 		<bootstrap.version>3.3.6</bootstrap.version>
 		<java.version>1.8</java.version>
 		<commons.version>2.6</commons.version>
-		<commons.io.version>2.5</commons.io.version>
+		<commons.io.version>2.7</commons.io.version>
 		<java.mail.version>1.4</java.mail.version>
 		<java.mock.mail.version>1.9</java.mock.mail.version>
 		<apache.commons.version>1.4.0</apache.commons.version>
